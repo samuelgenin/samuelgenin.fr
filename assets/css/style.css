@@ -804,15 +804,16 @@ input, select, textarea {
   padding-right: 40px; }
 
 .pb_outline-light {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid black;
   text-transform: uppercase;
   background: none;
-  color: white; }
+  color: black;
+}
   .pb_outline-light:hover, .pb_outline-light:active, .pb_outline-light:focus {
     outline: none;
-    background: #fff !important;
+    background: #000 !important;
     border: 1px solid white;
-    color: #000; }
+    color: #fff; }
 
 .pb_outline-dark {
   border: 1px solid rgba(0, 0, 0, 0.2);
