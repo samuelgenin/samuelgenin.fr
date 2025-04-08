@@ -1,0 +1,541 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Les Archivistes du Temps</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assetsbazar/css/main.css" />
+		<noscript><link rel="stylesheet" href="assetsbazar/css/noscript.css" /></noscript>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=VT323&display=swap');
+
+			:root {
+				--vintage-brown: #8B5A2B;
+				--vintage-beige: #D2B48C;
+				--vintage-yellow: #C19A6B;
+				--vintage-green: #2F4F4F;
+				--paper-bg: #E8E0CC;
+				--stamp-red: #8B2500;
+				--coffee-stain: rgba(101, 67, 33, 0.2);
+			}
+
+			@font-face {
+  		font-family: "Punk Typewriter";
+  	src: url("assets/webfonts/Punk Typewriter 2.otf") format("truetype");
+  	/* Vous pouvez ajouter d'autres formats pour assurer la compatibilité */
+		}
+
+			.archive-container {
+				background-color: var(--paper-bg);
+				border: 1px solid var(--vintage-brown);
+				padding: 2.5rem;
+				margin-bottom: 2rem;
+				position: relative;
+				box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+				background-image:
+					url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='%23E8E0CC'/%3E%3Cpath fill='%23D2B48C' fill-opacity='0.2' d='M0 0h100v100H0z'/%3E%3Cpath d='M0 0l100 100M100 0L0 100' stroke='%238B5A2B' stroke-width='0.8' stroke-opacity='0.08'/%3E%3C/svg%3E");
+			}
+
+			.archive-container::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-image:
+					radial-gradient(circle at 70% 20%, var(--coffee-stain) 0%, transparent 25%),
+					radial-gradient(circle at 30% 80%, var(--coffee-stain) 0%, transparent 20%),
+					radial-gradient(circle at 90% 85%, var(--coffee-stain) 0%, transparent 15%);
+				opacity: 0.7;
+				pointer-events: none;
+			}
+
+			.archive-title {
+				font-family: 'Punk Typewriter', monospace;
+				color: var(--vintage-green);
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				margin-bottom: 1.5rem;
+				text-align: center;
+				font-size: 3rem;
+				position: relative;
+				padding-bottom: 1rem;
+				text-shadow: 1px 1px 0 var(--vintage-beige);
+				opacity: 0.85;
+			}
+
+			.archive-title::after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 25%;
+				width: 50%;
+				height: 2px;
+				background: var(--vintage-brown);
+				opacity: 0.7;
+			}
+
+			.archive-subtitle {
+				font-family: 'Courier Prime', monospace;
+				color: var(--vintage-green);
+				font-size: 1.3rem;
+				font-weight: bold;
+				margin-bottom: 1rem;
+				border-bottom: 1px solid var(--vintage-brown);
+				padding-bottom: 0.5rem;
+				opacity: 0.9;
+			}
+
+			.archive-text {
+				font-family: 'Courier Prime', monospace;
+				font-size: 1.1rem;
+				line-height: 1.7;
+				color: var(--vintage-green);
+				text-align: justify;
+				margin-bottom: 1.5rem;
+				opacity: 0.85;
+			}
+
+			.archive-highlight {
+				background-color: var(--vintage-yellow);
+				color: var(--vintage-green);
+				padding: 0 4px;
+			}
+
+			.archive-button {
+				background-color: var(--vintage-brown);
+				color: var(--paper-bg);
+				font-family: 'VT323', monospace;
+				border: none;
+				padding: 12px 24px;
+				cursor: pointer;
+				transition: all 0.3s;
+				display: inline-block;
+				margin: 10px 0;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				font-size: 1.2rem;
+				opacity: 0.9;
+			}
+
+			.archive-button:hover {
+				background-color: var(--vintage-green);
+				transform: translateY(-2px);
+				box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+				opacity: 1;
+			}
+
+			.img-container {
+				position: relative;
+				margin: 1.5rem;
+				overflow: hidden;
+				border: 3px solid var(--vintage-beige);
+				box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+				max-width: 100%;
+			}
+
+			.img-container-left {
+				float: left;
+				max-width: 40%;
+				margin-right: 2rem;
+				margin-top: 0.5rem;
+				margin-bottom: 1.5rem;
+				transform: rotate(-1deg);
+			}
+
+			.img-container-right {
+				float: right;
+				max-width: 45%;
+				margin-left: 2rem;
+				margin-top: 0.5rem;
+				margin-bottom: 1.5rem;
+				transform: rotate(1deg);
+			}
+
+			.img-container img {
+				width: 100%;
+				display: block;
+				transition: filter 0.5s;
+				filter: sepia(30%) grayscale(10%);
+			}
+
+			.img-container:hover img {
+				filter: sepia(10%) grayscale(0%);
+			}
+
+			.img-container::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0));
+				pointer-events: none;
+			}
+
+			.img-container::before {
+				content: "";
+				position: absolute;
+				top: -5px;
+				left: 50%;
+				width: 30%;
+				height: 15px;
+				background-color: rgba(210, 180, 140, 0.3);
+				transform: translateX(-50%);
+				box-shadow: 0 0 5px rgba(0,0,0,0.1);
+				z-index: 1;
+			}
+
+			.video-container {
+				position: relative;
+				padding-bottom: 56.25%; /* 16:9 */
+				height: 0;
+				margin: 2rem 0;
+				border: 3px solid var(--vintage-beige);
+				box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+				clear: both;
+			}
+
+			.video-container::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: repeating-linear-gradient(
+					0deg,
+					rgba(0, 0, 0, 0.03),
+					rgba(0, 0, 0, 0.03) 2px,
+					transparent 2px,
+					transparent 4px
+				);
+				z-index: 2;
+				pointer-events: none;
+			}
+
+			.video-container iframe {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			.stamp {
+				position: absolute;
+				top: 40px;
+				right: 40px;
+				transform: rotate(12deg);
+				font-family: 'VT323', monospace;
+				color: var(--stamp-red);
+				border: 2px solid var(--stamp-red);
+				padding: 12px;
+				font-size: 1.2rem;
+				text-align: center;
+				opacity: 0.8;
+				z-index: 10;
+				box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+				letter-spacing: 1px;
+			}
+
+			.stamp::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: linear-gradient(45deg, transparent 40%, rgba(139, 37, 0, 0.2) 60%, transparent 80%);
+				z-index: -1;
+			}
+
+			.file-code {
+				font-family: 'Courier Prime', monospace;
+				font-size: 0.9rem;
+				color: var(--vintage-brown);
+				margin-bottom: 1rem;
+				opacity: 0.7;
+				letter-spacing: -0.5px;
+			}
+
+			.archive-metadata {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1rem;
+				margin: 2rem 0;
+				padding: 1.5rem;
+				background-color: rgba(139, 90, 43, 0.1);
+				border-left: 3px solid var(--vintage-brown);
+				clear: both;
+			}
+
+			.metadata-item {
+				flex: 1 1 200px;
+				font-family: 'Courier Prime', monospace;
+			}
+
+			.metadata-title {
+				font-weight: bold;
+				text-transform: uppercase;
+				font-size: 0.9rem;
+				margin-bottom: 0.5rem;
+				color: var(--vintage-green);
+				opacity: 0.9;
+			}
+
+			.metadata-value {
+				font-size: 1.1rem;
+				color: var(--vintage-brown);
+				opacity: 0.85;
+			}
+
+			.paper-texture::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238B5A2B' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+				pointer-events: none;
+				z-index: 2;
+			}
+
+			.paper-fold {
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 70px;
+				height: 70px;
+				background: linear-gradient(135deg, transparent 45%, rgba(210, 180, 140, 0.4) 50%);
+			}
+
+			.archive-note {
+				margin: 2rem 0;
+				padding: 1.5rem;
+				background-color: rgba(47, 79, 79, 0.05);
+				border: 1px dashed var(--vintage-green);
+				position: relative;
+				clear: both;
+			}
+
+			.archive-note::before {
+				content: "Note";
+				position: absolute;
+				top: -10px;
+				left: 20px;
+				background-color: var(--paper-bg);
+				padding: 0 10px;
+				font-family: 'VT323', monospace;
+				color: var(--vintage-green);
+				font-size: 1rem;
+				letter-spacing: 1px;
+			}
+
+			.clearfix::after {
+				content: "";
+				display: table;
+				clear: both;
+			}
+
+			.fingerprint {
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				background-image: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 50%, transparent 70%);
+				border-radius: 50%;
+				opacity: 0.3;
+			}
+
+			.fingerprint-1 {
+				bottom: 150px;
+				left: 50px;
+				transform: rotate(30deg) scale(1.2);
+			}
+
+			.fingerprint-2 {
+				top: 200px;
+				right: 80px;
+				transform: rotate(-15deg);
+			}
+
+			.paperclip {
+				position: absolute;
+				top: -10px;
+				left: 50px;
+				width: 30px;
+				height: 70px;
+				border: 2px solid rgba(100, 100, 100, 0.5);
+				border-radius: 5px 5px 0 0;
+				transform: rotate(5deg);
+				box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+				z-index: 10;
+			}
+
+			.paperclip::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 5px;
+				width: 16px;
+				height: 60px;
+				border: 2px solid rgba(100, 100, 100, 0.5);
+				border-radius: 5px 5px 0 0;
+				border-bottom: none;
+				border-left: none;
+			}
+
+			.typewriter-noise {
+				position: relative;
+			}
+
+			.typewriter-noise::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-image:
+					radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+					radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
+				background-size: 30px 30px;
+				background-position: 0 0, 15px 15px;
+				pointer-events: none;
+				opacity: 0.3;
+			}
+
+			.worn-edges {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-image:
+					radial-gradient(circle at 10px 10px, var(--paper-bg) 90%, rgba(210, 180, 140, 0.6) 100%),
+					radial-gradient(circle at right 10px top 10px, var(--paper-bg) 90%, rgba(210, 180, 140, 0.6) 100%),
+					radial-gradient(circle at 10px bottom 10px, var(--paper-bg) 90%, rgba(210, 180, 140, 0.6) 100%),
+					radial-gradient(circle at right 10px bottom 10px, var(--paper-bg) 90%, rgba(210, 180, 140, 0.6) 100%);
+				pointer-events: none;
+				z-index: 3;
+				opacity: 0.7;
+			}
+
+			.redaction {
+				position: relative;
+				display: inline-block;
+			}
+
+			.redaction::after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: 0;
+				right: 0;
+				height: 2px;
+				background-color: var(--stamp-red);
+				opacity: 0.8;
+				transform: translateY(-50%);
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+							<!-- Logo -->
+							<!-- Nav -->
+						</div>
+					</header>
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<div class="archive-container paper-texture">
+								<div class="paper-fold"></div>
+								<div class="worn-edges"></div>
+								<div class="paperclip"></div>
+								<div class="stamp">ARCHIVÉ - TOP SECRET</div>
+								<div class="fingerprint fingerprint-1"></div>
+								<div class="fingerprint fingerprint-2"></div>
+								<div class="file-code">DOSSIER: ADT-238-B &bull; EMPLACEMENT: SECTEUR 7 &bull; CLASSIFICATION: TOP SECRET</div>
+								<h1 class="archive-title typewriter-noise">Les Archivistes du Temps</h1>
+
+								<div class="img-container img-container-right">
+									<img src="images/affarch.jpeg" alt="Affiche du spectacle Les Archivistes du Temps" />
+								</div>
+
+								<p class="archive-text">
+									Et si les objets du quotidien cachaient des histoires extraordinaires ? Dans ce spectacle d'improvisation, Samuel Genin et Nicolas Perruchon remontent la ligne temporelle des objets du public pour en explorer le passé… plus ou moins réel ! D'où vient le sable de ces lunettes ? Ce stylo a-t-il été un bouclier viking ? Et si cette polaire synthétique avait d'abord été un jouet des années 60 ?
+								</p>
+
+								<div class="img-container img-container-left">
+									<img src="images/sametnico.jpeg" alt="Samuel Genin et Nicolas Perruchon, les Archivistes du Temps" />
+								</div>
+
+								<p class="archive-text">
+									Entre récits épiques, rencontres improbables et surprises temporelles, nos deux aventuriers croiseront peut-être des créatures légendaires ou des héros oubliés. Un mélange explosif d'impro, de mime et de cascades à la sauce jeu de rôle, dans un joyeux chaos qui évoque Matrix, Doctor Who et Everything Everywhere All At Once en version Tex Avery.
+								</p>
+
+								<p class="archive-text">
+									Un voyage délirant à travers le temps… et l'imaginaire !
+								</p>
+
+								<div class="clearfix"></div>
+
+								<div class="archive-note">
+									<p class="archive-text" style="margin-bottom: 0;">
+										<span class="archive-highlight">Attention</span> : Chaque représentation est <span class="archive-highlight">unique</span> car entièrement improvisée à partir des objets fournis par le public. Aucune ligne temporelle ne sera identique à une autre.
+									</p>
+								</div>
+
+								<div class="archive-metadata">
+									<div class="metadata-item">
+										<div class="metadata-title">Durée</div>
+										<div class="metadata-value">1 heure</div>
+									</div>
+									<div class="metadata-item">
+										<div class="metadata-title">Public</div>
+										<div class="metadata-value">À partir de 8 ans</div>
+									</div>
+									<div class="metadata-item">
+										<div class="metadata-title">Type</div>
+										<div class="metadata-value">Spectacle d'improvisation</div>
+									</div>
+									<div class="metadata-item">
+										<div class="metadata-title">Participation</div>
+										<div class="metadata-value">Objets du public</div>
+									</div>
+								</div>
+
+								<div class="video-container">
+									<iframe src="https://www.youtube.com/embed/PLACEHOLDER" title="Teaser des Archivistes du Temps" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								</div>
+
+								<div style="text-align: center; margin-top: 3rem;">
+									<a href="Les_Archivistes_du_Temps_Dossier.pdf" class="archive-button">Consulter le dossier complet du spectacle</a>
+								</div>
+
+								<p style="text-align: center; margin-top: 3rem; font-family: 'VT323', monospace; font-size: 1rem; color: var(--vintage-brown); letter-spacing: 1px; opacity: 0.7;">
+									MINISTÈRE DES ARCHIVES TEMPORELLES<br>
+									SECTION ARCHIVES &ndash; CONSULTATION PUBLIQUE<br>
+									<span class="redaction">DOCUMENT #2984-B</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				<!-- Footer -->
+			</div>
+		<!-- Scripts -->
+			<script src="assetsbazar/js/jquery.min.js"></script>
+			<script src="assetsbazar/js/browser.min.js"></script>
+			<script src="assetsbazar/js/breakpoints.min.js"></script>
+			<script src="assetsbazar/js/util.js"></script>
+			<script src="assetsbazar/js/main.js"></script>
+	</body>
+</html>
