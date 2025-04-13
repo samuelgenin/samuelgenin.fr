@@ -280,11 +280,16 @@
     <div class="container">
         <h1>La Biblioludothèque de Sam</h1>
         <div class="subtitle">...</div>
+<!--
+        <div id="visite-compteur" style="text-align:center; margin-top: 2rem; font-family: 'Special Elite', cursive; font-size: 1.2rem; color: #ffccff;">
+          Chargement du nombre de visiteurs...
+        </div>
+      -->
 
         <div class="button-container">
             <a href="lire.html"> <button id="jeux-video-btn" class="nav-button" "> Lire </button></a>
             <a href="jouer.html"> <button id="aventure-textuelle-btn" class="nav-button">Jouer</button></a>
-            <a href="voisi_un_animaux.html"> <button id="animaux-btn" class="nav-button">TU VEu UN ANMINAUX ?</button> </a>
+            <a href="voisi_un_animaux.html"> <button id="animaux-btn" class="nav-button"> TU VEu UN ANMINAUX ? </button> </a>
         </div>
 
         <div class="music-player">
@@ -1070,5 +1075,21 @@
             document.addEventListener('mousemove', handleMouseMove);
         };
     </script>
+
+
+<!--
+    <script>
+    fetch("http://samuelk.cluster029.hosting.ovh.net/compteur.php")
+        .then(r => r.text())
+        .then(nb => {
+            document.getElementById("visite-compteur").innerText = `🎯 Nombre de visiteurs : ${nb}`;
+        })
+        .catch(err => {
+            console.error("Erreur compteur :", err);
+            document.getElementById("visite-compteur").innerText = "Erreur compteur";
+        });
+    </script>
+  -->
+
 </body>
 </html>
