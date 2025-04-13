@@ -1,0 +1,132 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>La Biblioludothèque de Sam</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=VT323&family=Nosifer&family=Special+Elite&family=Emilys+Candy&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: repeating-radial-gradient(circle at 10% 20%, #1a0033, #330033 40%, #003333 80%);
+            color: #e6ccff;
+            font-family: 'Special Elite', cursive;
+            overflow-x: hidden;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='purple' stroke='lime' stroke-width='2'/></svg>") 16 16, auto;
+        }
+
+
+  .music-player {
+            background: linear-gradient(135deg, #330033, #000033);
+            border: 3px solid #660066;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            margin: 40px auto;
+            box-shadow: 0 0 20px rgba(102, 0, 102, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-player::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 80%, rgba(153, 0, 153, 0.3));
+            pointer-events: none;
+        }
+
+        .music-player h3 {
+            font-family: 'Emilys Candy', cursive;
+            color: #cc99ff;
+            text-align: center;
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .music-player-btn {
+            display: block;
+            width: 80%;
+            margin: 20px auto;
+            padding: 12px;
+            font-family: 'Special Elite', cursive;
+            background: linear-gradient(45deg, #660066, #990099);
+            color: #ffccff;
+            border: 2px solid #cc00cc;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .music-player-btn:hover {
+            background: linear-gradient(45deg, #990099, #cc00cc);
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .song-name {
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #660066;
+            border-radius: 5px;
+            color: #ff99ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            padding: 5px;
+            text-align: center;
+        }
+      </style>
+    </head>
+    <body>
+
+
+  <script>
+        // Liste de noms de musique fictifs
+        const musicList = [
+            "Forêt des Murmures Oubliés",
+            "Écho dans le Néant",
+            "Poussière de Rêves",
+            "Résonance Parallèle",
+            "Aube des Ombres",
+            "Passage Interdimensionnel",
+            "Valse des Fantômes",
+            "Mélodie du Temps Fragmenté",
+            "Souvenirs de l'Ailleurs",
+            "Chuchotements Cosmiques",
+            "Pulsation de l'Abîme",
+            "Larmes Cristallines",
+            "Sanctuaire Astral",
+            "Vibration Primitive"
+        ];
+
+        // Fonction qui joue une musique aléatoire
+        function playRandomMusic() {
+            const randomIndex = Math.floor(Math.random() * musicList.length);
+            const songName = musicList[randomIndex];
+            document.getElementById('current-song').textContent = songName;
+            document.getElementById('current-song').style.animation = 'pulse 2s';
+
+            // Simuler un effet visuel lors de la lecture
+            document.body.style.animation = 'none';
+            document.body.offsetHeight; // Force reflow
+            document.body.style.animation = 'pulse 1s';
+
+            // On pourrait normalement jouer un son ici avec:
+            // const audio = new Audio('chemin/vers/' + songName + '.mp3');
+            // audio.play();
+            console.log("Lecture de: " + songName);
+        }
+
+        </script>
+
+      </body>
+      </html>

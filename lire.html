@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Aquarium à histoires</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #a0eaff, #0077be);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: white;
+      text-align: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 3em;
+      text-shadow: 2px 2px 4px #004466;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      font-weight: normal;
+      font-size: 1.5em;
+      text-shadow: 1px 1px 3px #003344;
+    }
+
+    .aquarium {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .poisson {
+      position: absolute;
+      width: 150px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    .poisson:hover .info {
+      display: block;
+    }
+
+    .info {
+      display: none;
+      position: absolute;
+      top: 80px;
+      left: 0;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      white-space: nowrap;
+    }
+
+    @keyframes flotter1 {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(15px, -20px) rotate(8deg); }
+      50% { transform: translate(-10px, 15px) rotate(-6deg); }
+      75% { transform: translate(10px, 10px) rotate(4deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    @keyframes flotter2 {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(-10px, 10px) rotate(-5deg); }
+      50% { transform: translate(15px, -10px) rotate(7deg); }
+      75% { transform: translate(-5px, 20px) rotate(-6deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+
+    @keyframes flotter3 {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(20px, -15px) rotate(6deg); }
+      50% { transform: translate(-15px, 10px) rotate(-4deg); }
+      75% { transform: translate(10px, -5px) rotate(3deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Aquarium à histoires</h1>
+  <h2>Attrapez un poisson narrateur pour lire son histoire.</h2>
+
+  <div class="aquarium">
+    <a class="poisson" href="ecrits/4 portraits de l hirondelle - 5 min.pdf" style="top: 10%; left: 10%; animation: flotter1 15s ease-in-out infinite; background-image: url('images/poisson1.png');">
+      <div class="info">4 portraits de l’hirondelle
+        <br>Durée : 5 min</div>
+    </a>
+    <a class="poisson" href="ecrits/4 portraits ferroviaires - 2 min.pdf" style="top: 30%; left: 20%; animation: flotter2 18s ease-in-out infinite; background-image: url('images/poisson2.png');">
+      <div class="info">4 portraits ferroviaires
+        <br>Durée : 2 min</div>
+    </a>
+    <a class="poisson" href="ecrits/Belier - 11 min.pdf" style="top: 50%; left: 30%; animation: flotter3 17s ease-in-out infinite; background-image: url('images/poisson3.png');">
+      <div class="info">Bélier
+        <br>Durée : 11 min</div>
+    </a>
+    <a class="poisson" href="ecrits/Cancer - 7 min.pdf" style="top: 70%; left: 40%; animation: flotter2 20s ease-in-out infinite; background-image: url('images/poisson4.png');">
+      <div class="info">Cancer
+        <br>Durée : 7 min</div>
+    </a>
+    <a class="poisson" href="ecrits/La maison du fantome - 7 min.pdf" style="top: 20%; left: 50%; animation: flotter1 16s ease-in-out infinite; background-image: url('images/poisson5.png');">
+      <div class="info">La Maison du Fantôme
+        <br>Durée : 7 min</div>
+    </a>
+    <a class="poisson" href="ecrits/Le spectre infini des choses de connu à inconnu - 5 min.pdf" style="top: 60%; left: 60%; animation: flotter3 19s ease-in-out infinite; background-image: url('images/poisson6.png');">
+      <div class="info">Le spectre infini des choses de connu à inconnu
+        <br>Durée : 5 min</div>
+    </a>
+    <a class="poisson" href="ecrits/Routine Urbex - 3 min.pdf" style="top: 40%; left: 70%; animation: flotter2 14s ease-in-out infinite; background-image: url('images/poisson7.png');">
+      <div class="info">Routine Urbex
+        <br>Durée : 3 min</div>
+    </a>
+    <a class="poisson" href="ecrits/Taureau - 10 min.pdf" style="top: 80%; left: 80%; animation: flotter1 21s ease-in-out infinite; background-image: url('images/poisson8.png');">
+      <div class="info">Taureau
+        <br>Durée : 10 min</div>
+    </a>
+  </div>
+</body>
+</html>

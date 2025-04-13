@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>La Ludothèque de Sam</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assetsbazar/css/main.css" />
+		<noscript><link rel="stylesheet" href="assetsbazar/css/noscript.css" /></noscript>
+		<style>
+			body {
+				background: linear-gradient(120deg, #ffe8e0 0%, #e0f7fa 100%);
+				font-family: 'Comic Sans MS', cursive, sans-serif;
+				cursor: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') 16 16, auto;
+			}
+			h1, h2 {
+				color: #4a148c;
+				text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+			}
+			a {
+				color: #00695c;
+				text-decoration: none;
+				transition: transform 0.3s ease, color 0.3s ease;
+			}
+			a:hover {
+				color: #d84315;
+				transform: scale(1.1);
+			}
+			img {
+				border-radius: 12px;
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+			}
+			img:hover {
+				transform: scale(1.05);
+				box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+			}
+			#surprise {
+				margin-top: 30px;
+				padding: 10px 20px;
+				background: #ffccbc;
+				border: none;
+				border-radius: 20px;
+				font-weight: bold;
+				cursor: pointer;
+				box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+				transition: all 0.3s ease;
+			}
+			#surprise:hover {
+				background: #ff8a65;
+				transform: rotate(-2deg) scale(1.1);
+			}
+			#output {
+				margin-top: 20px;
+				font-style: italic;
+				color: #5d4037;
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+		<div id="wrapper">
+			<header id="header">
+				<div class="inner">
+					<a href="indexbazar.html" class="logo">
+						<span class="symbol"></span><span class="title">Samuel Genin</span>
+					</a>
+				</div>
+			</header>
+			<div id="main">
+				<div class="inner">
+					<h1>La Ludothèque de Sam</h1>
+					<h2>Retrouve ici une compilation de jeux que j’ai créés, jeux vidéo ou textuels.</h2>
+					<p><a href="le_vieux_gardien_de_zoo_se_r_vei(2).html">Le Vieux Gardien de Zoo (2025)</a>:</p>
+					<p><a href="le_vieux_gardien_de_zoo_se_r_vei(2).html"><img src="imagesbazar/illzoo.png" alt="" /></a></p>
+					<p>Un très court (3 minutes) jeu narratif fait sur Bitsy.</p>
+					<p>*</p>
+					<p><a href="EscaleaPoesie.pdf">Éscale à Poésie (2020)</a></p>
+					<p><a href="EscaleaPoesie.pdf"><img src="imagesbazar/illpoe.png" alt="" /></a></p>
+					<p>Une aventure dont vous êtes le héros à lire en pdf, en une trentaine de pages, réalisée dans le cadre du mini-yaz 2020.</p>
+					<p>*</p>
+					<button id="surprise">Clique pour une surprise ✨</button>
+					<p id="output"></p>
+				</div>
+			</div>
+		</div>
+		<script>
+			const surprises = [
+				"As-tu joué aujourd’hui ? C’est bon pour la créativité ! 🎲",
+				"Le savais-tu ? Ce site cache une potion de fun ! 🧪",
+				"N'oublie pas : chaque clic est une aventure ! 🗺️",
+				"Ton jeu préféré aujourd’hui, c’est lequel ? 🎮",
+				"Si tu lis ça, tu gagnes un cœur pixelisé ❤️"
+			];
+			document.getElementById("surprise").addEventListener("click", () => {
+				const index = Math.floor(Math.random() * surprises.length);
+				document.getElementById("output").innerText = surprises[index];
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>voisi ton animaux</title>
+  <style>
+    body {
+      background: #fdf6f6;
+      font-family: "Comic Sans MS", cursive;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      margin: 20px 0;
+    }
+    canvas {
+      background: #fff;
+      display: block;
+      margin: 0 auto;
+      border: 2px solid #000;
+      cursor: pointer;
+    }
+    button {
+      font-family: "Comic Sans MS", cursive;
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>voisi ton animaux</h1>
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <div>
+    <button onclick="fireworks()">il es bo !</button>
+    <button onclick="rain()">il es pA bau !</button>
+  </div>
+  <audio id="ambientSound" loop>
+    <source src="musique/zanimo.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const colors = ["#b88c8c", "#ddadad", "#d6c7c7", "#9fb9bf", "#aec8ce", "#000000", "#b35454", "#13738a", "#138a4d"];
+    const audio = document.getElementById('ambientSound');
+    audio.volume = 0.2;
+    audio.play().catch(() => {});
+    window.addEventListener('load', () => {
+      audio.play().catch(() => {
+        // si autoplay bloqué, on attend un clic utilisateur
+        const unlock = () => {
+          audio.play();
+          document.body.removeEventListener('click', unlock);
+        };
+        document.body.addEventListener('click', unlock);
+      });
+    });
+
+    let mouseX = 200;
+    let mouseY = 200;
+    let isPetting = false;
+    let blinkTimer = 0;
+    let blinkProgress = 0;
+    let isBlinking = false;
+    let particles = [];
+    let sparkles = [];
+    let creature = {};
+    let t = 0;
+
+    canvas.addEventListener("mousemove", e => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    });
+
+    canvas.addEventListener("mousedown", () => {
+      isPetting = true;
+      setTimeout(() => { isPetting = false }, 500);
+    });
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function randColor() {
+      return colors[rand(0, colors.length - 1)];
+    }
+
+    function initCreature() {
+      creature = {
+        headColor: randColor(),
+        bodyColor: randColor(),
+        legColor: randColor(),
+        tailColor: randColor(),
+        wingColor: randColor(),
+        bodyShape: ["oval", "blob", "block"][rand(0,2)],
+        headShape: ["round", "snout", "oval"][rand(0,2)],
+        legShape: ["block", "curved"][rand(0,1)],
+        tailShape: ["long", "curly"][rand(0,1)],
+        earShape: ["tri", "round", "long"][rand(0,2)],
+        wingShape: ["round", "pointy"][rand(0,1)]
+      };
+    }
+
+    function drawCreature(time) {
+      t = time * 0.001;
+      blinkTimer++;
+      if (blinkTimer > 300) {
+        isBlinking = true;
+        blinkProgress += 0.1;
+        if (blinkProgress >= 1.0) {
+          blinkTimer = 0;
+          blinkProgress = 0;
+          isBlinking = false;
+        }
+      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(200, 200);
+      ctx.rotate(Math.sin(t) * 0.02);
+      ctx.translate(-200, -200);
+      drawAura(); drawBody(); drawHead(); drawEars(); drawEyes();
+      drawLegs(); drawTail(); drawWings(); drawPatterns();
+      drawShadowUnderneath(); drawSparkles();
+      ctx.restore();
+      drawParticles();
+      requestAnimationFrame(drawCreature);
+    }
+
+    function drawBody() {
+      ctx.fillStyle = creature.bodyColor;
+      ctx.beginPath();
+      if (creature.bodyShape === 'oval') ctx.ellipse(200, 260, 80, 50, 0, 0, Math.PI * 2);
+      else if (creature.bodyShape === 'blob') ctx.ellipse(200, 260, 90, 40, 0.3, 0, Math.PI * 2);
+      else ctx.rect(120, 220, 160, 80);
+      ctx.fill(); ctx.stroke();
+    }
+
+    function drawHead() {
+      ctx.fillStyle = creature.headColor;
+      ctx.beginPath();
+      if (creature.headShape === 'round') ctx.arc(200, 160, 40, 0, Math.PI * 2);
+      else if (creature.headShape === 'snout') {
+        ctx.moveTo(160, 160);
+        ctx.quadraticCurveTo(200, 110, 240, 160);
+        ctx.quadraticCurveTo(200, 210, 160, 160);
+      } else ctx.ellipse(200, 160, 30, 50, 0, 0, Math.PI * 2);
+      ctx.fill(); ctx.stroke();
+    }
+
+    function drawEars() {
+      ctx.fillStyle = creature.headColor;
+      if (creature.earShape === 'tri') {
+        ctx.beginPath(); ctx.moveTo(165, 130); ctx.lineTo(150, 100); ctx.lineTo(175, 110); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(235, 130); ctx.lineTo(250, 100); ctx.lineTo(225, 110); ctx.closePath(); ctx.fill(); ctx.stroke();
+      } else if (creature.earShape === 'round') {
+        ctx.beginPath(); ctx.arc(165, 130, 10, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.arc(235, 130, 10, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      } else {
+        ctx.beginPath(); ctx.ellipse(165, 125, 8, 18, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(235, 125, 8, 18, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      }
+    }
+
+    function drawEyes() {
+      function eye(x, y) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.beginPath(); ctx.ellipse(0, 0, 12, 18, 0, 0, Math.PI * 2); ctx.fillStyle = "white"; ctx.fill(); ctx.stroke();
+        if (isBlinking) {
+          ctx.fillStyle = creature.headColor;
+          ctx.beginPath(); ctx.ellipse(0, 0, 12, 18 * blinkProgress, 0, 0, Math.PI * 2); ctx.fill();
+        } else {
+          const dx = (mouseX - x) / 50;
+          const dy = (mouseY - y) / 50;
+          ctx.beginPath(); ctx.arc(dx * 5, dy * 5, 6, 0, Math.PI * 2);
+          ctx.fillStyle = isPetting ? "hotpink" : "black"; ctx.fill();
+          ctx.beginPath(); ctx.arc(dx * 5 - 2, dy * 5 - 2, 2, 0, Math.PI * 2);
+          ctx.fillStyle = "white"; ctx.fill();
+        }
+        ctx.restore();
+      }
+      eye(180, 155); eye(220, 155);
+    }
+
+    function drawLegs() {
+      for (let i = 0; i < 4; i++) {
+        const x = 140 + i * 30;
+        ctx.fillStyle = creature.legColor;
+        if (creature.legShape === 'block') ctx.fillRect(x, 310, 10, 30);
+        else { ctx.beginPath(); ctx.moveTo(x, 310); ctx.quadraticCurveTo(x + 5, 330, x, 340); ctx.stroke(); }
+      }
+    }
+
+    function drawTail() {
+      ctx.strokeStyle = creature.tailColor;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      if (creature.tailShape === 'long') ctx.quadraticCurveTo(200, 300, 300 + 20 * Math.sin(t), 320);
+      else ctx.bezierCurveTo(180, 320, 190, 350, 160 + 10 * Math.cos(t), 360);
+      ctx.stroke();
+    }
+
+    function drawWings() {
+      ctx.fillStyle = creature.wingColor;
+      if (creature.wingShape === 'round') {
+        ctx.beginPath(); ctx.moveTo(120, 240); ctx.bezierCurveTo(80, 200, 80, 280, 120, 270); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(280, 240); ctx.bezierCurveTo(320, 200, 320, 280, 280, 270); ctx.fill(); ctx.stroke();
+      } else {
+        ctx.beginPath(); ctx.moveTo(130, 240); ctx.lineTo(100, 200); ctx.lineTo(120, 270); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(270, 240); ctx.lineTo(300, 200); ctx.lineTo(280, 270); ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+    }
+
+    function drawPatterns() {
+      for (let i = 0; i < 1; i++) {
+        ctx.fillStyle = randColor();
+        ctx.beginPath(); ctx.arc(rand(160, 240), rand(230, 290), rand(1, 4), 1, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    function drawAura() {
+      const radius = 100 + 10 * Math.sin(t * 2);
+      ctx.strokeStyle = creature.bodyColor + '44';
+      ctx.beginPath(); ctx.arc(200, 260, radius, 0, Math.PI * 2); ctx.stroke();
+    }
+
+    function drawShadowUnderneath() {
+      ctx.fillStyle = 'rgba(0,0,0,0.1)';
+      ctx.beginPath(); ctx.ellipse(200, 360, 60, 10, 0, 0, Math.PI * 2); ctx.fill();
+    }
+
+    function drawSparkles() {
+      if (Math.random() < 0.05) sparkles.push({ x: rand(160, 240), y: rand(230, 290), r: 1, alpha: 1 });
+      for (let i = sparkles.length - 1; i >= 0; i--) {
+        const s = sparkles[i]; s.alpha -= 0.01; s.r += 0.3;
+        if (s.alpha <= 0) sparkles.splice(i, 1);
+        else {
+          ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+
+    function drawParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= 1;
+        ctx.globalAlpha = p.life / 100;
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = 1;
+        if (p.life <= 0) particles.splice(i, 1);
+      }
+    }
+
+    function fireworks() {
+      for (let i = 0; i < 50; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = Math.random() * 3 + 2;
+        particles.push({
+          x: 200,
+          y: 200,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          radius: 2 + Math.random() * 2,
+          color: randColor(),
+          life: 100
+        });
+      }
+    }
+
+    function rain() {
+      for (let i = 0; i < 30; i++) {
+        particles.push({
+          x: rand(0, 400),
+          y: rand(0, 50),
+          vx: 0,
+          vy: Math.random() * 4 + 4,
+          radius: 2,
+          color: "#13738a",
+          life: 60
+        });
+      }
+    }
+
+    initCreature();
+    requestAnimationFrame(drawCreature);
+  </script>
+</body>
+</html>
